@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ExerciseOptions, fetchData } from "../utils/fetchData";
 const SearchExercises = ({ setExercises, setBodyPart, bodyPart }) => {
   const [search, setSearch] = useState("");
-  const [bodyparts, setBodyParts] = useState([]);
+  const [bodyParts, setBodyParts] = useState([]);
   useEffect(() => {
     const fetchExercisesData = async () => {
       const bodyPartsData = await fetchData(
@@ -12,6 +12,7 @@ const SearchExercises = ({ setExercises, setBodyPart, bodyPart }) => {
 
         ExerciseOptions
       );
+
       setBodyParts(["all", ...bodyPartsData]);
     };
 
@@ -20,7 +21,7 @@ const SearchExercises = ({ setExercises, setBodyPart, bodyPart }) => {
   const handleSearch = async () => {
     if (search) {
       const exercisesData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises",
+        "https://exercisedb.p.rapidapi.com/exercises?limit=1000&offset=0",
         ExerciseOptions
       );
       const SearchedExercises = exercisesData.filter(
@@ -86,7 +87,7 @@ const SearchExercises = ({ setExercises, setBodyPart, bodyPart }) => {
       </Box>
       <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
         <HorizontalScrollbar
-          data={bodyparts}
+          data={bodyParts}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
         />

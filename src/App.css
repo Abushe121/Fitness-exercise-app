@@ -20,7 +20,7 @@ body {
   outline: none;
   border: none;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   color: #ff2625;
   font-size: 25px;
@@ -90,6 +90,11 @@ body {
 .bodyPart-card {
   transform: scale(1, 1);
   transition: 0.3s all ease-in-out;
+  width: 270px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .exercise-card:hover,
@@ -125,7 +130,9 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
-
+  .react-horizontal-scrolling-menu--scroll-container {
+    width: 75vw;
+  }
   .left-arrow,
   .right-arrow {
     position: static !important;

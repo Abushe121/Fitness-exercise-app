@@ -4,34 +4,57 @@ import { ExerciseOptions, fetchData } from "../utils/fetchData";
 import ExerciseCard from "./ExerciseCard";
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const exercisesPerPage = 4;
+  const exercisesPerPage = 9;
 
-  const indexOfLastExxercise = currentPage * exercisesPerPage;
-  const indexOfFirstExercise = indexOfLastExxercise - exercisesPerPage;
+  const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
   const currentExercises = exercises.slice(
     indexOfFirstExercise,
-    indexOfLastExxercise
+    indexOfLastExercise
   );
   const paginate = (e, value) => {
     setCurrentPage(value);
     window.scrollTo({ top: 1800, behavior: "smooth" });
   };
 
+  // useEffect(() => {
+  //   const fetchExercisesData = async () => {
+  //     let exercisesData = [];
+  //     if (bodyPart === "all") {
+  //       exercisesData = await fetchData(
+  //         "https://exercisedb.p.rapidapi.com/exercises?limit=1000&offset=0",
+  //         ExerciseOptions
+  //       );
+  //     } else {
+  //       exercisesData = await fetchData(
+  //         `https://exercisedb.p.rapidapi.com/exercises/${bodyPart}`,
+  //         ExerciseOptions
+  //       );
+  //     }
+  //     setExercises(exercisesData);
+  //   };
+  //   fetchExercisesData();
+  // }, [bodyPart]);
+
   useEffect(() => {
     const fetchExercisesData = async () => {
-      let exercisesData = [];
-      if (bodyPart === "all") {
-        exercisesData = await fetchData(
-          "https://exercisedb.p.rapidapi.com/exercises?limit=10&offset=0",
-          ExerciseOptions
-        );
-      } else {
-        exercisesData = await fetchData(
-          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
-          ExerciseOptions
-        );
+      try {
+        let exercisesData = [];
+        if (bodyPart !== "all") {
+          exercisesData = await fetchData(
+            "https://exercisedb.p.rapidapi.com/exercises?limit=1000&offset=0",
+            ExerciseOptions
+          );
+        } else {
+          exercisesData = await fetchData(
+            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1000&offset=0`,
+            ExerciseOptions
+          );
+        }
+        setExercises(exercisesData);
+      } catch (error) {
+        console.error("Error fetching exercises data:", error);
       }
-      setExercises(exercisesData);
     };
     fetchExercisesData();
   }, [bodyPart]);
